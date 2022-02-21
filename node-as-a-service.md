@@ -1,8 +1,9 @@
 ### Node as a service
 
+```
 cat <<EOF | sudo tee -a /etc/systemd/system/cardano-node.service
 [Unit]
-Description=Cardano Pool
+Description=Cardano Node Relay
 After=multi-user.target
 [Service]
 Type=simple
@@ -12,15 +13,15 @@ KillSignal = SIGINT
 RestartKillSignal = SIGINT
 StandardOutput=syslog
 StandardError=syslog
-SyslogIdentifier=cardano
+SyslogIdentifier=cardano-node
 LimitNOFILE=32768
 
 
 Restart=on-failure
 RestartSec=15s
-WorkingDirectory=~
+WorkingDirectory=/home/cardano/cnode
 User=cardano
-Group=cardano
 [Install]
 WantedBy=multi-user.target
 EOF
+```
