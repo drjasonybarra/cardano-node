@@ -25,3 +25,11 @@ User=cardano
 WantedBy=multi-user.target
 EOF
 ```
+
+
+Then
+
+```
+sudo systemctl enable cardano-node.service
+sudo systemctl start cardano-node.service
+```
