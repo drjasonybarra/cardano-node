@@ -1,0 +1,26 @@
+### Node as a service
+
+cat <<EOF | sudo tee -a /etc/systemd/system/cardano-node.service
+[Unit]
+Description=Cardano Pool
+After=multi-user.target
+[Service]
+Type=simple
+ExecStart=/home/cardano/bin/cardano-node run --config /home/cardano/cnode/config/mainnet-config.json --topology /home/cardano/cnode/config/mainnet-topology.json --database-path  /home/cardano/cnode/db/ --socket-path  /home/cardano/cnode/sockets/node.socket --host-addr 0.0.0.0 --port 6001    
+
+KillSignal = SIGINT
+RestartKillSignal = SIGINT
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=cardano
+LimitNOFILE=32768
+
+
+Restart=on-failure
+RestartSec=15s
+WorkingDirectory=~
+User=cardano
+Group=cardano
+[Install]
+WantedBy=multi-user.target
+EOF
