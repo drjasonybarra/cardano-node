@@ -30,6 +30,7 @@ EOF
 Then
 
 ```
+sudo systemctl daemon-reload
 sudo systemctl enable cardano-node.service
 sudo systemctl start cardano-node.service
 ```
