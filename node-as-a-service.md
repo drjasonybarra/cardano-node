@@ -17,7 +17,7 @@ SyslogIdentifier=cardano-node
 LimitNOFILE=32768
 
 
-Restart=on-failure
+Restart=always
 RestartSec=15s
 WorkingDirectory=/home/cardano/cnode
 User=cardano
