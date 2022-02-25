@@ -11,8 +11,8 @@ ExecStart=/home/cardano/bin/cardano-node run --config /home/cardano/cnode/config
 
 KillSignal = SIGINT
 RestartKillSignal = SIGINT
-StandardOutput=syslog
-StandardError=syslog
+StandardOutput=file:/home/cardano/node-out.log
+StandardError=file:/home/cardano/node-error.log
 SyslogIdentifier=cardano-node
 LimitNOFILE=32768
 
