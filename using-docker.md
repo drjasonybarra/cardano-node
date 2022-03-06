@@ -9,7 +9,7 @@ docker volume create cnode-monitor
 docker network create monitoring
 
 docker run -d \
---name cardano-node
+--name cardano-node \
 --network monitoring \
 -e CARDANO_NODE_SOCKET_PATH=/ipc/node.socket \
 -e CARDANO_DATABASE_PATH=/data \
