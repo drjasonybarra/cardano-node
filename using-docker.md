@@ -17,6 +17,6 @@ docker run -d \
 -v cnode-ipc:/ipc \
 -v cnode-data:/data \
 -p 6001:6001 \
-inputoutput/cardano-node run
+inputoutput/cardano-node run --socket-path /ipc/node.socket
 
 ```
