@@ -22,7 +22,7 @@ inputoutput/cardano-node run --socket-path /ipc/node.socket
 
 
 docker run -d \
---cpus=”2.5” \
+--cpus=2.5 \
 --name cardano-node2 \
 --network monitoring \
 --restart=unless-stopped \
