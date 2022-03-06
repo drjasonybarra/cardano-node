@@ -36,3 +36,29 @@ docker run -d \
 inputoutput/cardano-node run --socket-path /ipc/node.socket
 
 ```
+
+
+To get into a running container
+```
+docker exec -it cardano-node /bin/bash
+cardano-cli query tip --mainnet
+```
+To see how much disk space Docker is taking up
+```
+docker system df
+docker system df -v
+```
+To see stats
+```
+docker stats --no-stream
+```
+
+To see last 10 lines of the log
+```
+docker logs <container> --tail 10
+```
+
+To see first 10 lines
+```
+docker logs <container> |& head -n10
+```
