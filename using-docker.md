@@ -28,7 +28,6 @@ docker run -d \
 --restart=unless-stopped \
 -e CARDANO_NODE_SOCKET_PATH=/ipc/node.socket \
 -e CARDANO_DATABASE_PATH=/data \
--e CARDANO_TOPOLOGY=/ipc/config/mainnet-topology.json \
 -e CARDANO_PORT=6001 \
 -v cnode-ipc:/ipc \
 -v cnode-data:/data \
