@@ -37,9 +37,9 @@ inputoutput/cardano-node run --socket-path /ipc/node.socket
 ```
 Other computer
 
+Create directories ~/cnode/data and ~/cnode/ipc
+
 ```
-docker volume create cnode-data
-docker volume create cnode-ipc
 docker volume create cnode-monitor
 docker network create monitoring
 
@@ -51,8 +51,8 @@ docker run -d \
 -e CARDANO_NODE_SOCKET_PATH=/ipc/node.socket \
 -e CARDANO_DATABASE_PATH=/data \
 -e CARDANO_PORT=6002 \
--v cnode-ipc:/ipc \
--v cnode-data:/data \
+-v ~/cnode/data:/data \
+-v ~/cnode/ipc:/ipc 
 -p 6002:6002 \
 inputoutput/cardano-node run --socket-path /ipc/node.socket
 ```
