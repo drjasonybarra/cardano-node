@@ -83,3 +83,10 @@ To see first 10 lines
 ```
 docker logs <container> |& head -n10
 ```
+
+Copy Files from Docker volume to host
+
+```
+CID=$(docker run -d -v <docker_volume>:/mnt_point busybox true)
+docker cp $CID:/mnt_point ./
+```
