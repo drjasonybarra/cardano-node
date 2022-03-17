@@ -35,6 +35,28 @@ docker run -d \
 inputoutput/cardano-node run --socket-path /ipc/node.socket
 
 ```
+Other computer
+
+```
+docker volume create cnode-data
+docker volume create cnode-ipc
+docker volume create cnode-monitor
+docker network create monitoring
+
+docker run -d \
+--cpus=2.5 \
+--name cardano-block \
+--network monitoring \
+--restart=unless-stopped \
+-e CARDANO_NODE_SOCKET_PATH=/ipc/node.socket \
+-e CARDANO_DATABASE_PATH=/data \
+-e CARDANO_PORT=6002 \
+-v cnode-ipc:/ipc \
+-v cnode-data:/data \
+-p 6002:6002 \
+inputoutput/cardano-node run --socket-path /ipc/node.socket
+```
+
 
 
 To get into a running container
