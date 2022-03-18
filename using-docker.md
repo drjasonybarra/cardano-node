@@ -40,7 +40,7 @@ docker run -d \
 -e CARDANO_TOPOLOGY=/ipc/config/mainnet-topology.json \
 -e CARDANO_PORT=6002 \
 -v ~/cnode/data:/data \
--v ~/cnode/ipc:/ipc 
+-v ~/cnode/ipc:/ipc \
 -p 6002:6002 \
 inputoutput/cardano-node run --socket-path /ipc/node.socket
 ```
