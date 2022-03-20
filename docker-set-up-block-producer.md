@@ -50,15 +50,15 @@ Generate node/cold key
 ```
 cardano-cli node key-gen \
     --cold-verification-key-file node.vkey \
-    --cold-signing-key-file $HOME/cold-keys/node.skey \
+    --cold-signing-key-file node.skey \
     --operational-certificate-issue-counter node.counter
 ```
 
 ```
 cardano-cli node issue-op-cert \
     --kes-verification-key-file kes.vkey \
-    --cold-signing-key-file $HOME/cold-keys/node.skey \
-    --operational-certificate-issue-counter $HOME/cold-keys/node.counter \
+    --cold-signing-key-file node.skey \
+    --operational-certificate-issue-counter node.counter \
     --kes-period <startKesPeriod> \
     --out-file node.cert
 ```
