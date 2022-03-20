@@ -76,7 +76,7 @@ $CLI node key-gen-VRF \
 
 ### Restart Block Producer Node
 
-Add the following
+Add the following to your Docker startup command
 ```
 -e CARDANO_BLOCK_PRODUCER=true
 -e CARDANO_SHELLEY_KES_KEY=/ipc/keys/kes.skey
@@ -85,3 +85,22 @@ Add the following
 
 ```
 
+For example
+```
+docker run -d \
+--name cardano-block1 \
+--network monitoring \
+--restart=unless-stopped \
+-v ~/cnode/data:/data \
+-v ~/cnode/ipc:/ipc \
+-e CARDANO_NODE_SOCKET_PATH=/ipc/node.socket \
+-e CARDANO_DATABASE_PATH=/data \
+-e CARDANO_TOPOLOGY=/ipc/config/mainnet-topology.json \
+-e CARDANO_PORT=6001 \
+-e CARDANO_BLOCK_PRODUCER=true \
+-e CARDANO_SHELLEY_KES_KEY=/ipc/keys/kes.skey \
+-e CARDANO_SHELLEY_VRF_KEY=/ipc/keys/vrf.skey \
+-e CARDANO_SHELLEY_OPERATIONAL_CERTIFICATE=/ipc/keys/node.cert \
+-p 6001:6001 \
+inputoutput/cardano-node run --socket-path /ipc/node.socket
+```
