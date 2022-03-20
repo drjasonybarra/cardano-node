@@ -1,4 +1,4 @@
-
+### On COLD machine ###
 
 ```
 ./cardano-address recovery-phrase generate --size 24 > phrase.prv
@@ -38,3 +38,5 @@ cardano-cli address build \
     --out-file payment.addr \
     --mainnet
 ```
+
+copy payment.addr to USB drive
