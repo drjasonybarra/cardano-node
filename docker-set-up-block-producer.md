@@ -62,3 +62,26 @@ cardano-cli node issue-op-cert \
     --kes-period <startKesPeriod> \
     --out-file node.cert
 ```
+Copy node.cert to USB
+
+### Make VRF key
+
+Back to block producer machine
+
+```
+$CLI node key-gen-VRF \
+    --verification-key-file /ipc/keys/vrf.vkey \
+    --signing-key-file /ipc/keys/vrf.skey
+```
+
+### Restart Block Producer Node
+
+Add the following
+```
+-e CARDANO_BLOCK_PRODUCER=true
+-e CARDANO_SHELLEY_KES_KEY=/ipc/keys/kes.skey
+-e CARDANO_SHELLEY_VRF_KEY=/ipc/keys/vrf.skey
+-e CARDANO_SHELLEY_OPERATIONAL_CERTIFICATE=/ipc/keys/node.cert
+
+```
+
