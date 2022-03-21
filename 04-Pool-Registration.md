@@ -14,9 +14,12 @@ EOF
 ```
 
 Save poolMetaData.json to GIT Pool project 
-Use RAW then https://git.io/ to shorten URL
+Use RAW then https://git.io/ to shorten URL.
+
 Download
+```
 wget -O poolMetaData.json <your git.io link>
+```
 
  ```
 $CLI stake-pool metadata-hash --pool-metadata-file poolMetaData.json > poolMetaDataHash.txt
