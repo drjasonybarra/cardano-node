@@ -1,0 +1,19 @@
+Save poolMetaData.json to GIT Pool project 
+Use RAW then https://git.io/ to shorten URL
+Download
+wget -O poolMetaData.json <your git.io link>
+
+ ```
+$CLI stake-pool metadata-hash --pool-metadata-file poolMetaData.json > poolMetaDataHash.txt
+```
+Copy poolMetaDataHash.txt to USB
+
+```minPoolCost=$(cat params.json | jq -r .minPoolCost)
+echo minPoolCost: ${minPoolCost}
+```
+Find deposit needed (i.e. 500 ADA)
+
+```
+stakePoolDeposit=$(cat $NODE_HOME/params.json | jq -r '.stakePoolDeposit')
+echo stakePoolDeposit: $stakePoolDeposit
+```
