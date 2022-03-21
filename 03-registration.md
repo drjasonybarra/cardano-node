@@ -105,7 +105,7 @@ $CLI transaction submit \
 
 ```
 $CLI query utxo \
---address $(cat ~cnode/ipc/txs/payment.addr) \
+--address $(cat ~/cnode/ipc/txs/payment.addr) \
 --mainnet
 
 ```
