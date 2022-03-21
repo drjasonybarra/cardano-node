@@ -96,6 +96,8 @@ Copy tx.signed to USB
 On BP machine
 
 ```
+docker cp tx.signed $CID:/ipc/txs/
+
 $CLI transaction submit \
     --tx-file tx.signed \
     --mainnet
