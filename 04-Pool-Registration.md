@@ -35,8 +35,10 @@ $CLI stake-pool registration-certificate \
     --pool-reward-account-verification-key-file stake.vkey \
     --pool-owner-stake-verification-key-file stake.vkey \
     --mainnet \
-    --pool-relay-ipv4 <RELAY NODE PUBLIC IP> \
-    --pool-relay-port <RELAY NODE PORT> \
+    --single-host-pool-relay <RELAY NODE DNS #1> \
+    --pool-relay-port <RELAY NODE PORT #1> \
+    --pool-relay-ipv4 <RELAY NODE PUBLIC IP #2> \
+    --pool-relay-port <RELAY NODE PORT #2> \
     --metadata-url <METADATA URL> \
     --metadata-hash <POOL METADATA HASH> \
     --out-file pool-registration.cert
