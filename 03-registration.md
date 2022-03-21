@@ -73,6 +73,7 @@ $CLI transaction build-raw \
     --certificate-file /ipc/txs/stake.cert \
     --out-file /ipc/txs/tx.raw
 
+docker cp $CID:/ipc/txs/tx.raw .
 ```
 
 
