@@ -42,7 +42,7 @@ echo Current Slot: $currentSlot
 
 $CLI transaction build-raw \
     ${tx_in} \
-    --tx-out $(cat /ipc/txs/payment.addr)+0 \
+    --tx-out $(cat ~/cnode/ipc/txs/payment.addr)+0 \
     --invalid-hereafter $(( ${currentSlot} + 10000)) \
     --fee 0 \
     --out-file /ipc/txs/tx.draft \
