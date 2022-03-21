@@ -1,0 +1,74 @@
+Copy stake.cert and payment.addr to BP /ipc/txs
+
+```
+export CLI='docker run -it --entrypoint cardano-cli -e CARDANO_NODE_SOCKET_PATH=/ipc/node.socket -v <FULL PATH>/cnode/ipc:/ipc inputoutput/cardano-node'
+
+$CLI query protocol-parameters \
+    --mainnet \
+    --out-file /ipc/txs/params.json
+
+$CLI query utxo \
+    --address $(cat /ipc/txs/payment.addr) \
+    --mainnet > /ipc/txs/fullUtxo.out
+
+CID=$(docker run -d -v ~/cnode/ipc:/ipc busybox true)
+docker cp $CID:/ipc/txs/fullUtxo.out .
+docker cp $CID:/ipc/txs/params.json .
+```
+
+Then
+
+```
+tail -n +3 fullUtxo.out | sort -k3 -nr > balance.out
+cat balance.out
+
+tx_in=""
+total_balance=0
+while read -r utxo; do
+    in_addr=$(awk '{ print $1 }' <<< "${utxo}")
+    idx=$(awk '{ print $2 }' <<< "${utxo}")
+    utxo_balance=$(awk '{ print $3 }' <<< "${utxo}")
+    total_balance=$((${total_balance}+${utxo_balance}))
+    echo TxHash: ${in_addr}#${idx}
+    echo ADA: ${utxo_balance}
+    tx_in="${tx_in} --tx-in ${in_addr}#${idx}"
+done < balance.out
+txcnt=$(cat balance.out | wc -l)
+echo Total ADA balance: ${total_balance}
+echo Number of UTXOs: ${txcnt}
+
+currentSlot=$($CLI query tip --mainnet | jq -r '.slot')
+echo Current Slot: $currentSlot
+
+$CLI transaction build-raw \
+    ${tx_in} \
+    --tx-out $(cat /ipc/txs/payment.addr)+0 \
+    --invalid-hereafter $(( ${currentSlot} + 10000)) \
+    --fee 0 \
+    --out-file /ipc/txs/tx.draft \
+    --certificate-file /ipc/txs/stake.cert
+
+fee=$($CLI transaction calculate-min-fee \
+    --tx-body-file /ipc/txs/tx.draft \
+    --tx-in-count ${txcnt} \
+    --tx-out-count 1 \
+    --mainnet \
+    --witness-count 2 \
+    --byron-witness-count 0 \
+    --protocol-params-file /ipc/txs/params.json | awk '{ print $1 }')
+echo fee: $fee
+
+stakeAddressDeposit=$(cat params.json | jq -r '.stakeAddressDeposit')
+echo stakeAddressDeposit : $stakeAddressDeposit
+
+txOut=$((${total_balance}-${stakeAddressDeposit}-${fee}))
+echo Change Output: ${txOut}
+
+$CLI transaction build-raw \
+    ${tx_in} \
+    --tx-out $(cat /ipc/txs/payment.addr)+${txOut} \
+    --invalid-hereafter $(( ${currentSlot} + 10000)) \
+    --fee ${fee} \
+    --certificate-file /ipc/txs/stake.cert \
+    --out-file /ipc/txs/tx.raw
+```
