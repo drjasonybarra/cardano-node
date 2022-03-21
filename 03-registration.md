@@ -67,7 +67,7 @@ echo Change Output: ${txOut}
 
 $CLI transaction build-raw \
     ${tx_in} \
-    --tx-out $(cat /ipc/txs/payment.addr)+${txOut} \
+    --tx-out $(cat ~/cnode/ipc/txs/payment.addr)+${txOut} \
     --invalid-hereafter $(( ${currentSlot} + 10000)) \
     --fee ${fee} \
     --certificate-file /ipc/txs/stake.cert \
