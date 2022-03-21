@@ -1,3 +1,6 @@
+Be sure to have ```stake.vkey``` and ```cold.vkey``` on BP machine
+
+
 Save poolMetaData.json to GIT Pool project 
 Use RAW then https://git.io/ to shorten URL
 Download
