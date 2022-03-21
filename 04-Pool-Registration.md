@@ -26,7 +26,7 @@ Make sure to have stakePoolDeposit + pool pledge in payment address
 On BP
 
  ```
-$CLIi stake-pool registration-certificate \
+$CLI stake-pool registration-certificate \
     --cold-verification-key-file cold.vkey \
     --vrf-verification-key-file vrf.vkey \
     --pool-pledge 200000000 > \
