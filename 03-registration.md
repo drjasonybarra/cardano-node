@@ -8,7 +8,7 @@ $CLI query protocol-parameters \
     --out-file /ipc/txs/params.json
 
 $CLI query utxo \
-    --address $(cat /ipc/txs/payment.addr) \
+    --address $(cat ~/cnode/ipc/txs/payment.addr) \
     --mainnet > /ipc/txs/fullUtxo.out
 
 CID=$(docker run -d -v ~/cnode/ipc:/ipc busybox true)
