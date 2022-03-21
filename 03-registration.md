@@ -1,16 +1,20 @@
 Copy stake.cert and payment.addr to BP /ipc/txs
 
 ```
-export CLI='docker run -it --entrypoint cardano-cli -e CARDANO_NODE_SOCKET_PATH=/ipc/node.socket -v <FULL PATH>/cnode/ipc:/ipc inputoutput/cardano-node'
+docker exec -it cardano-block1 /bin/bash
 
-$CLI query protocol-parameters \
+cardano-cli query protocol-parameters \
     --mainnet \
     --out-file /ipc/txs/params.json
 
-$CLI query utxo \
-    --address $(cat ~/cnode/ipc/txs/payment.addr) \
+cardano-cli query utxo \
+    --address $(cat /ipc/txs/payment.addr) \
     --mainnet > /ipc/txs/fullUtxo.out
 
+exit
+```
+
+```
 CID=$(docker run -d -v ~/cnode/ipc:/ipc busybox true)
 docker cp $CID:/ipc/txs/fullUtxo.out .
 docker cp $CID:/ipc/txs/params.json .
