@@ -55,9 +55,9 @@ fee=$($CLI transaction calculate-min-fee \
     --mainnet \
     --witness-count 2 \
     --byron-witness-count 0 \
-    --protocol-params-file /ipc/txs/params.json | awk '{ print $1 }')
-echo fee: $fee
+    --protocol-params-file /ipc/txs/params.json | awk '{ print $1 }') 
 
+echo fee: $fee
 
 stakeAddressDeposit=$(cat params.json | jq -r '.stakeAddressDeposit')
 echo stakeAddressDeposit : $stakeAddressDeposit
