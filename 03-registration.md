@@ -72,3 +72,26 @@ $CLI transaction build-raw \
     --certificate-file /ipc/txs/stake.cert \
     --out-file /ipc/txs/tx.raw
 ```
+
+Copy tx.raw to USB drive to be signed
+
+On **air-gapped machine**
+
+```
+cardano-cli transaction sign \
+    --tx-body-file tx.raw \
+    --signing-key-file payment.skey \
+    --signing-key-file stake.skey \
+    --mainnet \
+    --out-file tx.signed
+```
+
+Copy tx.signed to USB
+
+On BP machine
+
+```
+$CLI transaction submit \
+    --tx-file tx.signed \
+    --mainnet
+```
