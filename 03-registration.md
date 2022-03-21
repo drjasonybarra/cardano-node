@@ -99,6 +99,14 @@ On BP machine
 docker cp tx.signed $CID:/ipc/txs/
 
 $CLI transaction submit \
-    --tx-file tx.signed \
+    --tx-file /ipc/txs/tx.signed \
     --mainnet
 ```
+
+```
+$CLI query utxo \
+--address $(cat ~cnode/ipc/txs/payment.addr) \
+--mainnet
+
+```
+
