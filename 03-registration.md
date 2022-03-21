@@ -15,14 +15,9 @@ exit
 ```
 
 ```
-CID=$(docker run -d -v ~/cnode/ipc:/ipc busybox true)
-docker cp $CID:/ipc/txs/fullUtxo.out .
-docker cp $CID:/ipc/txs/params.json .
-```
+docker run -v ~/cnode/ipc:/ipc -it --rm  busybox
 
-Then
-
-```
+pushd /ipc/txs/
 tail -n +3 fullUtxo.out | sort -k3 -nr > balance.out
 cat balance.out
 
@@ -44,38 +39,12 @@ echo Number of UTXOs: ${txcnt}
 currentSlot=$($CLI query tip --mainnet | jq -r '.slot')
 echo Current Slot: $currentSlot
 
-$CLI transaction build-raw \
-    ${tx_in} \
-    --tx-out $(cat /ipc/txs/payment.addr)+0 \
-    --invalid-hereafter $(( ${currentSlot} + 10000)) \
-    --fee 0 \
-    --out-file /ipc/txs/tx.draft \
-    --certificate-file /ipc/txs/stake.cert
+echo $currentSlot  > currentSlot.txt 
 
-fee=$($CLI transaction calculate-min-fee \
-    --tx-body-file /ipc/txs/tx.draft \
-    --tx-in-count ${txcnt} \
-    --tx-out-count 1 \
-    --mainnet \
-    --witness-count 2 \
-    --byron-witness-count 0 \
-    --protocol-params-file /ipc/txs/params.json | awk '{ print $1 }')
-echo fee: $fee
-
-stakeAddressDeposit=$(cat params.json | jq -r '.stakeAddressDeposit')
-echo stakeAddressDeposit : $stakeAddressDeposit
-
-txOut=$((${total_balance}-${stakeAddressDeposit}-${fee}))
-echo Change Output: ${txOut}
-
-$CLI transaction build-raw \
-    ${tx_in} \
-    --tx-out $(cat /ipc/txs/payment.addr)+${txOut} \
-    --invalid-hereafter $(( ${currentSlot} + 10000)) \
-    --fee ${fee} \
-    --certificate-file /ipc/txs/stake.cert \
-    --out-file /ipc/txs/tx.raw
+exit
 ```
+
+
 
 Copy tx.raw to USB drive to be signed
 
