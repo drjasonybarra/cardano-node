@@ -60,17 +60,15 @@ $CLI stake-pool registration-certificate \
 
 
  ```
- 
-### ON CM
 
 ```
-./cardano-cli stake-address delegation-certificate \
-    --stake-verification-key-file stake.vkey \
-    --cold-verification-key-file $HOME/cold-keys/node.vkey \
-    --out-file deleg.cert
+$CLI stake-address delegation-certificate \
+    --stake-verification-key-file /ipc/keys/stake.vkey \
+    --cold-verification-key-file /ipc/keys/node.vkey \
+    --out-file /ipc/txs/deleg.cert
 
  ```
-cp deleg.cert to USB
+
  
 ### ON BP
 
