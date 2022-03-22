@@ -123,3 +123,32 @@ $CLI transaction build-raw \
 
 
 ```
+
+Find fee
+```
+fee=$($CLI transaction calculate-min-fee \
+    --tx-body-file /ipc/txs/tx.tmp \
+    --tx-in-count ${txcnt} \
+    --tx-out-count 1 \
+    --mainnet \
+    --witness-count 3 \
+    --byron-witness-count 0 \
+    --protocol-params-file /ipc/txs/params.json | awk '{ print $1 }')
+
+echo fee: ${fee}
+txOut=$((${total_balance}-${stakePoolDeposit}-${fee}))
+echo txOut: ${txOut}
+
+
+$CLI transaction build-raw \
+    ${tx_in} \
+    --tx-out $(cat ~/cnode/ipc/txs/payment.addr)+${txOut}  \
+    --invalid-hereafter $(( ${currentSlot} + 10000)) \
+    --fee ${fee} \
+    --certificate-file /ipc/txs/pool-registration.cert \
+    --certificate-file /ipc/txs/deleg.cert \
+    --out-file /ipc/txs/tx.raw
+
+
+docker cp $CID:/ipc/txs/tx.raw .
+```
