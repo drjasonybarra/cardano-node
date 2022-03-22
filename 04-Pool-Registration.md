@@ -83,12 +83,16 @@ cardano-cli query utxo \
 exit
 #---#
 
+cd $HOME
+CID=$(docker run -d -v ~/cnode/ipc:/ipc busybox true)
 docker cp $CID:/ipc/txs/fullUtxo.out .
 
 currentSlot=$($CLI query tip --mainnet | jq -r '.slot')
+
 echo Current Slot: $currentSlot
 
 tail -n +3 fullUtxo.out | sort -k3 -nr > balance.out
+
 cat balance.out
 
 tx_in=""
@@ -102,6 +106,7 @@ while read -r utxo; do
     echo ADA: ${utxo_balance}
     tx_in="${tx_in} --tx-in ${in_addr}#${idx}"
 done < balance.out
+
 txcnt=$(cat balance.out | wc -l)
 echo Total ADA balance: ${total_balance}
 echo Number of UTXOs: ${txcnt}
@@ -109,11 +114,12 @@ echo Number of UTXOs: ${txcnt}
 
 $CLI transaction build-raw \
     ${tx_in} \
-    --tx-out $(cat payment.addr)+$(( ${total_balance} - ${stakePoolDeposit}))  \
+    --tx-out $(cat ~/cnode/ipc/txs/payment.addr)+$(( ${total_balance} - ${stakePoolDeposit}))  \
     --invalid-hereafter $(( ${currentSlot} + 10000)) \
     --fee 0 \
-    --certificate-file pool.cert \
-    --certificate-file deleg.cert \
-    --out-file tx.tmp
+    --certificate-file /ipc/txs/pool-registration.cert \
+    --certificate-file /ipc/txs/deleg.cert \
+    --out-file /ipc/txs/tx.tmp
+
 
 ```
