@@ -152,3 +152,15 @@ $CLI transaction build-raw \
 
 docker cp $CID:/ipc/txs/tx.raw .
 ```
+
+On CM
+```
+./cardano-cli transaction sign \
+    --tx-body-file tx.raw \
+    --signing-key-file payment.skey \
+    --signing-key-file stake.skey \
+    --signing-key-file node.skey \
+    --mainnet \
+    --out-file tx.signed
+
+```
