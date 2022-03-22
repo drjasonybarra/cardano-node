@@ -25,8 +25,9 @@ wget -O poolMetaData.json <SHORT URL>
 $CLI stake-pool metadata-hash --pool-metadata-file poolMetaData.json > poolMetaDataHash.txt
 ```
 
-
-```minPoolCost=$(cat params.json | jq -r .minPoolCost)
+Verify pool cost
+```
+minPoolCost=$(cat params.json | jq -r .minPoolCost)
 echo minPoolCost: ${minPoolCost}
 ```
 Find deposit needed (i.e. 500 ADA)
