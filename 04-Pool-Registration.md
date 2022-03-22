@@ -13,18 +13,18 @@ cat > poolMetaData.json << EOF
 EOF
 ```
 
-Save poolMetaData.json to GIT Pool project 
-Use RAW then https://git.io/ to shorten URL.
+Save poolMetaData.json to Github; Obtain RAW link and then
+use a URL shortener
 
 Download
 ```
-wget -O poolMetaData.json <your git.io link>
+wget -O poolMetaData.json <SHORT URL>
 ```
 
  ```
 $CLI stake-pool metadata-hash --pool-metadata-file poolMetaData.json > poolMetaDataHash.txt
 ```
-Copy poolMetaDataHash.txt to USB
+
 
 ```minPoolCost=$(cat params.json | jq -r .minPoolCost)
 echo minPoolCost: ${minPoolCost}
@@ -41,21 +41,22 @@ Make sure to have stakePoolDeposit + pool pledge in payment address
 
  ```
 $CLI stake-pool registration-certificate \
-    --cold-verification-key-file cold.vkey \
-    --vrf-verification-key-file vrf.vkey \
-    --pool-pledge 200000000 > \
+    --cold-verification-key-file /ipc/keys/node.vkey \
+    --vrf-verification-key-file /ipc/keys/vrf.vkey \
+    --pool-pledge 100000000 \
     --pool-cost 340000000 \
     --pool-margin 0.02 \
-    --pool-reward-account-verification-key-file stake.vkey \
-    --pool-owner-stake-verification-key-file stake.vkey \
+    --pool-reward-account-verification-key-file /ipc/txs/stake.vkey \
+    --pool-owner-stake-verification-key-file /ipc/txs/stake.vkey \
     --mainnet \
-    --single-host-pool-relay <RELAY NODE DNS #1> \
+    --single-host-pool-relay "<RELAY NODE DNS #1>" \
     --pool-relay-port <RELAY NODE PORT #1> \
-    --pool-relay-ipv4 <RELAY NODE PUBLIC IP #2> \
+    --pool-relay-ipv4 "<RELAY NODE PUBLIC IP #2>" \
     --pool-relay-port <RELAY NODE PORT #2> \
     --metadata-url <METADATA URL> \
-    --metadata-hash <POOL METADATA HASH> \
-    --out-file pool-registration.cert
+    --metadata-hash <METADATA HASH> \
+    --out-file /ipc/txs/pool-registration.cert
+
 
  ```
  
